@@ -10,17 +10,17 @@ puts "[3] Superman"
 
 input_option = gets.chomp
 if input_option  == "1"
-  response= Unirest.get("http://localhost:3000/peter_url")
+  response= Unirest.get("http://localhost:3000/v1/peter_url")
   contact=response.body
   puts JSON.pretty_generate(contact)
 elsif input_option == "2"
-  response= Unirest.get("http://localhost:3000/bruce_url")
+  response= Unirest.get("http://localhost:3000/v1/bruce_url")
   contact=response.body
   puts JSON.pretty_generate(contact)
 
 
 elsif input_option == "3"
-  response = Unirest.get("http://localhost:3000/clark_url")
+  response = Unirest.get("http://localhost:3000/v1/clark_url")
   contact=response.body
   puts JSON.pretty_generate(contact)
   
