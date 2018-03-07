@@ -1,4 +1,4 @@
-class ContactsController < ApplicationController
+class V1::ContactsController < ApplicationController
   def peter
     contact=Contact.first
     render json:{
@@ -25,4 +25,5 @@ class ContactsController < ApplicationController
       email:contact.email ,
       phone_number:contact.phume_number}
   end
+
 end
