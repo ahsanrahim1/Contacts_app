@@ -4,6 +4,9 @@ Rails.application.routes.draw do
     get "/bruce_url" => "contacts#bruce"
     get "/clark_url" => "contacts#clark"
     get "/show_all_contacts_url" => "contacts#show_all"
+  end
+  namespace:v2 do
+    get "/contacts" => "contacts#index"
 
   end
 end
