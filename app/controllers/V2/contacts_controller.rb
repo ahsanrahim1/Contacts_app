@@ -31,4 +31,19 @@ class V2::ContactsController < ApplicationController
     render json: contacts.as_json
   end
 
+  def show
+    contact_id = params["id"]
+    contact = Contact.find_by(id: contact_id)
+    render json: contact.as_json
+  end
+
+  def create
+    contact= Contact.new[
+      first_name: params["input_name"],
+      last_name: params["input_last_name"],
+      email: params["input_email"],
+      phume_number: params["input_phone_number"]
+    ]
+  end
+
 end
