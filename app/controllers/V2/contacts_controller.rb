@@ -38,12 +38,35 @@ class V2::ContactsController < ApplicationController
   end
 
   def create
-    contact= Contact.new[
+    contact = Contact.new(
       first_name: params["input_name"],
       last_name: params["input_last_name"],
       email: params["input_email"],
       phume_number: params["input_phone_number"]
-    ]
+    )
+
+    contact.save
+    render json: contact.as_json
   end
+
+  def update
+    contact_id = params["id"]
+    contact = Contact.find_by(id: contact_id)
+    contact.first_name = params["input_name"] || contact.first_name
+    contact.last_name = params["input_last_name"] ||contact.last_name
+    contact.email = params["input_email"] ||contact.email
+    contact.phume_number = params["input_phone_number"] ||contact.phume_number
+    contact.save
+    render json:contact.as_json
+  end
+
+  def destroy
+    contact_id = params["id"]
+    contact = Contact.find_by(id: contact_id)
+    contact.destroy
+    render json: {message: "contact deleted"}
+  end
+
+
 
 end

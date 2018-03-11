@@ -6,8 +6,12 @@ Rails.application.routes.draw do
     get "/show_all_contacts_url" => "contacts#show_all"
   end
   namespace:v2 do
-    get "/contact" => "contacts#index"
-    get "/contact/:id" => "contacts#show"
-    post "/contact" => "contact#create"
+    get "/contacts" => "contacts#index"
+    get "/contacts/:id" => "contacts#show"
+    post "/contacts" => "contacts#create"
+    patch "/contacts/:id" => "contacts#update"
+    delete "/contacts/:id" => "contacts#destroy"
+   
+    # patch 
   end
 end
