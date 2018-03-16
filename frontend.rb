@@ -4,6 +4,7 @@ require "unirest"
 system "clear"
 puts "Welcome to the contacts app"
 puts "To view all contacts press 1"
+puts "To search a contact by name press #"
 puts "To view a certain contact press 2"
 puts "To create a new contact press 3"
 puts "To update a contact press 4"
@@ -11,6 +12,14 @@ puts "To delete a contact press 5"
 input_key = gets.chomp
 if input_key == "1"
   response = Unirest.get("http://localhost:3000/v2/contacts") 
+  contacts = response.body
+  puts JSON.pretty_generate(contacts) 
+
+elsif input_key == "#"
+  params = {}
+  print "Enter name : "
+  params["search_term"] = gets.chomp
+  response = Unirest.get("http://localhost:3000/v2/contacts?query=#{params["search_term"]}") 
   contacts = response.body
   puts JSON.pretty_generate(contacts) 
 
@@ -27,6 +36,10 @@ elsif input_key == "3"
   params["input_name"] = gets.chomp
   print "Enter last name :"
   params["input_last_name"] = gets.chomp
+  print "Enter middle name :"
+  params["input_middle_name"] = gets.chomp
+  print "Enter bio :"
+  params["input_bio"] = gets.chomp
   print "Enter email :"
   params["input_email"] = gets.chomp
   print "Enter phone number :"
@@ -43,6 +56,8 @@ elsif input_key == "3"
    params["input_name"] = gets.chomp
    print "Enter last name :"
    params["input_last_name"] = gets.chomp
+   print "Enter middle name :"
+   params["input_middle_name"] = gets.chomp
    print "Enter email :"
    params["input_email"] = gets.chomp
    print "Enter phone number :"

@@ -28,6 +28,10 @@ class V2::ContactsController < ApplicationController
 
   def index 
     contacts = Contact.all 
+    search_term = params[:query]
+    if search_term
+      contacts = contacts.where("first_name ILIKE ? OR last_name ILIKE ? OR email ILIKE ? OR phume_number ILIKE ?", "%#{search_term}%", "%#{search_term}%", "%#{search_term}%", "%#{search_term}%")
+    end
     render json: contacts.as_json
   end
 
@@ -42,7 +46,9 @@ class V2::ContactsController < ApplicationController
       first_name: params["input_name"],
       last_name: params["input_last_name"],
       email: params["input_email"],
-      phume_number: params["input_phone_number"]
+      phume_number: params["input_phone_number"],
+      bio: params["input_bio"],
+      middle_name: params["input_middle_name"]
     )
 
     contact.save
@@ -56,6 +62,8 @@ class V2::ContactsController < ApplicationController
     contact.last_name = params["input_last_name"] ||contact.last_name
     contact.email = params["input_email"] ||contact.email
     contact.phume_number = params["input_phone_number"] ||contact.phume_number
+    contact.middle_name = params["input_middle_name"] || contact.middle_name
+    contact.bio = params["input_bio"] || contact.bio
     contact.save
     render json:contact.as_json
   end

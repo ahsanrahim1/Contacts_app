@@ -17,8 +17,10 @@ class Contact < ApplicationRecord
       first_name: first_name,
       last_name: last_name,
       full_name: full_name,
+      middle_name: middle_name,
       email: email,
       phone_number:phume_number,
+      bio:bio,
       phone_number_with_JP: japanese_number,
       updated_at: friendly_updated_at
     }
