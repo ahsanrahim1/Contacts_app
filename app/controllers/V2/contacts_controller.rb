@@ -27,12 +27,18 @@ class V2::ContactsController < ApplicationController
   # end
 
   def index 
-    contacts = Contact.all 
-    search_term = params[:query]
-    if search_term
-      contacts = contacts.where("first_name ILIKE ? OR last_name ILIKE ? OR email ILIKE ? OR phume_number ILIKE ?", "%#{search_term}%", "%#{search_term}%", "%#{search_term}%", "%#{search_term}%")
+    # contacts = Contact.all 
+    if current_user
+      contacts = current_user.contacts.order(:id)
+      search_term = params[:query]
+      if search_term
+
+        contacts = contacts.where("first_name ILIKE ? OR last_name ILIKE ? OR email ILIKE ? OR phume_number ILIKE ?", "%#{search_term}%", "%#{search_term}%", "%#{search_term}%", "%#{search_term}%")
+      end
+      render json: contacts.as_json
+    else 
+      render json: []
     end
-    render json: contacts.as_json
   end
 
   def show
@@ -42,17 +48,22 @@ class V2::ContactsController < ApplicationController
   end
 
   def create
+    if current_user
     contact = Contact.new(
       first_name: params["input_name"],
       last_name: params["input_last_name"],
       email: params["input_email"],
       phume_number: params["input_phone_number"],
       bio: params["input_bio"],
-      middle_name: params["input_middle_name"]
+      middle_name: params["input_middle_name"],
+      user_id: current_user.id
     )
 
     contact.save
     render json: contact.as_json
+    else 
+      render json: {message: "user not logged in"}
+    end
   end
 
   def update
